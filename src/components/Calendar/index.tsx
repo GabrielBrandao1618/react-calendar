@@ -7,16 +7,31 @@ import { CalendarDay } from './CalendarDay'
 
 export function Calendar() {
 
-    const days = useMonthDays(2021, 4)
+    const date = new Date()
 
-    useEffect(() => {
-        console.log(days)
-    }, [])
+
+
+    const [year, setYear] = useState(date.getFullYear())
+    const [month, setMonth] = useState(date.getMonth() + 1)
+
+    const { days, monthName } = useMonthDays(year, month)
 
     return (
         <CalendarContainer>
             <CalendarHeader>
-                <h2>CalendarHeader</h2>
+                <h2>{monthName}, {month}</h2>
+
+                <select onChange={e => setMonth(Number(e.target.value))} value={month}>
+                    <option value="1">Jan</option>
+                    <option value="2">Feb</option>
+                    <option value="3">Mar</option>
+                    <option value="4">Abr</option>
+                    <option value="5">May</option>
+                    <option value="6">Jun</option>
+                    <option value="7">Jul</option>
+                </select>
+
+                <input type="number" value={year} onChange={e => setYear(Number(e.target.value))} />
             </CalendarHeader>
             <CalendarBody>
                 <WeekDays>
@@ -30,7 +45,7 @@ export function Calendar() {
                 </WeekDays>
                 <Days>
                     {days.map(day => (
-                        <CalendarDay weekDay={day.weekDay}>
+                        <CalendarDay weekDay={day.weekDay} key={day.day}>
                             {day.day}
                         </CalendarDay>
                     ))}
