@@ -54,8 +54,9 @@ export const months = [
 export function useMonthDays(year: number, month: number) {
 
     let days = []
+    let extra = (year % 4 == 0 && month == 2 ? 1 : 0);
 
-    for (let i = 1; i < months[month - 1].days + 1; i++) {
+    for (let i = 1; i < (months[month - 1].days + 1) + extra; i++) {
         days.push({
             day: i,
             weekDay: getWeekDay(year, month - 1, i) + 1
