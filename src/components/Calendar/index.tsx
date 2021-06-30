@@ -45,7 +45,7 @@ export function Calendar() {
                     <select onChange={e => setMonth(Number(e.target.value))} value={month}>
                         {months.map((month, index) => {
                             return (
-                                <option value={index + 1}>
+                                <option value={index + 1} key={month.name}>
                                     {month.name}
                                 </option>
                             )
@@ -89,7 +89,7 @@ export function Calendar() {
                         <CalendarDay
                             weekDay={day.weekDay}
                             key={day.day}
-                            marked={day.day == date.getDate() && month - 1 == date.getMonth() && year == date.getFullYear()}
+                            marked={day.day === date.getDate() && month - 1 === date.getMonth() && year === date.getFullYear()}
                         >
                             {day.day}
                         </CalendarDay>
@@ -152,6 +152,17 @@ const CalendarHeader = styled.div`
             border-radius: 8px;
             background:none;
             color: white;
+        }
+
+        select option{
+            background-color:rgb(15, 11, 32);
+            border:none;
+            outline:none;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
+
+            &:hover{
+                background-color:rgb(50, 0, 189);
+            }
         }
     }
 `

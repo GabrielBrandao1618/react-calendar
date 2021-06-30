@@ -35,15 +35,18 @@ export const CalendarDay = styled(CalendarDayComponent)`
     border-radius: 5px;
     font-size: 16pt;
     border: 1px solid rgba(0, 0, 0, 0);
+    color:#e4e4ea;
+    margin: 5px;
 
     &.marked{
-        background-color:green;
+        background-color: rgba(50, 0, 189, 0.745);
     }
 
     &:hover{
         background-color: rgba(0, 0, 0, 0.5);
         border-color: #3200bd;
     }
+
 `
 
 function CalendarDayComponent(props: CalendarDayProps) {
