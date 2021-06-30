@@ -16,7 +16,7 @@ export function Calendar() {
     const [year, setYear] = useState(date.getFullYear())
     const [month, setMonth] = useState(date.getMonth() + 1)
 
-    const { days, monthName } = useMonthDays(year, month)
+    const { days } = useMonthDays(year, month)
 
     function handleChangeYear(dif: number) {
         setYear(year + dif)
@@ -86,7 +86,11 @@ export function Calendar() {
                 </div>
                 <Days>
                     {days.map(day => (
-                        <CalendarDay weekDay={day.weekDay} key={day.day}>
+                        <CalendarDay
+                            weekDay={day.weekDay}
+                            key={day.day}
+                            marked={day.day == date.getDate() && month - 1 == date.getMonth() && year == date.getFullYear()}
+                        >
                             {day.day}
                         </CalendarDay>
                     ))}
