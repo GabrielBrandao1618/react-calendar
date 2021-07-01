@@ -6,8 +6,11 @@ import { CalendarDay } from './CalendarDay';
 
 import arrowLeft from '../../assets/icons/arrow_left.svg';
 import arrowRight from '../../assets/icons/arrow_right.svg';
+import calendarIcon from '../../assets/icons/calendar.svg';
 
 import { months } from '../../hooks/useMonthDays';
+
+import { CalendarHeader } from './Header';
 
 export function Calendar() {
 
@@ -16,7 +19,7 @@ export function Calendar() {
     const [year, setYear] = useState(date.getFullYear())
     const [month, setMonth] = useState(date.getMonth() + 1)
 
-    const { days } = useMonthDays(year, month)
+    const { days, monthName } = useMonthDays(year, month)
 
     function handleChangeYear(dif: number) {
         setYear(year + dif)
@@ -37,41 +40,53 @@ export function Calendar() {
         <CalendarContainer>
             <CalendarHeader>
 
-                <div className="date-selector">
-                    <button onClick={() => handleChangeMonth(-1)}>
-                        <img src={arrowLeft} alt="Seta para a esquerda" />
-                    </button>
-
-                    <select onChange={e => setMonth(Number(e.target.value))} value={month}>
-                        {months.map((month, index) => {
-                            return (
-                                <option value={index + 1} key={month.name}>
-                                    {month.name}
-                                </option>
-                            )
-                        })}
-                    </select>
-
-                    <button onClick={() => handleChangeMonth(1)}>
-                        <img src={arrowRight} alt="Seta para a direita" />
-                    </button>
+                <div className="infos">
+                    <h3>{monthName.toUpperCase()}</h3>
                 </div>
 
-                <div className="date-selector">
-                    <button onClick={() => handleChangeYear(-1)}>
-                        <img src={arrowLeft} alt="Seta para a esquerda" />
-                    </button>
-                    <input
-                        type="number"
-                        min="1970"
-                        value={year}
-                        onChange={e => setYear(Number(e.target.value))}
-                    />
-                    <button onClick={() => handleChangeYear(1)}>
-                        <img src={arrowRight} alt="Seta para a esquerda" />
-                    </button>
+                <div className="date-selectors">
+                    <div className="date-selector">
+                        <button onClick={() => handleChangeMonth(-1)}>
+                            <img src={arrowLeft} alt="Seta para a esquerda" />
+                        </button>
+
+                        <select onChange={e => setMonth(Number(e.target.value))} value={month}>
+                            {months.map((month, index) => {
+                                return (
+                                    <option value={index + 1} key={month.name}>
+                                        {month.name}
+                                    </option>
+                                )
+                            })}
+                        </select>
+
+                        <button onClick={() => handleChangeMonth(1)}>
+                            <img src={arrowRight} alt="Seta para a direita" />
+                        </button>
+                    </div>
+
+                    <div className="date-selector">
+                        <button onClick={() => handleChangeYear(-1)}>
+                            <img src={arrowLeft} alt="Seta para a esquerda" />
+                        </button>
+                        <input
+                            type="number"
+                            min="1970"
+                            value={year}
+                            onChange={e => setYear(Number(e.target.value))}
+                        />
+                        <button onClick={() => handleChangeYear(1)}>
+                            <img src={arrowRight} alt="Seta para a esquerda" />
+                        </button>
+                    </div>
                 </div>
 
+                <button className="today-btn" onClick={() => {
+                    setYear(date.getFullYear())
+                    setMonth(date.getMonth() + 1)
+                }}>
+                    <img src={calendarIcon} alt="Ícone de calendário" />
+                </button>
 
             </CalendarHeader>
             <CalendarBody>
@@ -108,64 +123,6 @@ const CalendarContainer = styled.div`
     max-width: 800px;
 `
 
-const CalendarHeader = styled.div`
-    background: #0f0b20;
-    display:flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    justify-content: center;
-
-    .date-selector{
-        width: 90%;
-        max-width: 190px;
-        display:flex;
-        align-items:center;
-        justify-content: space-between;
-        border: 1px solid white;
-        border-radius: 8px;
-        margin: 3px;
-
-        button{
-            background:none;
-            border:none;
-            outline:none;
-            border-radius: 50%;
-            cursor:pointer;
-            width: 30px;
-            height: 30px;
-            display:flex;
-            align-items: center;
-            justify-content: center;
-            transition: all .2s;
-
-            &:hover{
-                background-color: #323232;
-            }
-        }
-
-        input, select{
-            flex:1;
-            max-width: 60px;
-            outline: none;
-            border:none;
-            padding: 2px;
-            border-radius: 8px;
-            background:none;
-            color: white;
-        }
-
-        select option{
-            background-color:rgb(15, 11, 32);
-            border:none;
-            outline:none;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.4);
-
-            &:hover{
-                background-color:rgb(50, 0, 189);
-            }
-        }
-    }
-`
 const CalendarBody = styled.div`
     background: #0f0b20;
     display:grid;
